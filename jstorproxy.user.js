@@ -31,16 +31,14 @@ if (!GM_getValue('proxy')) {
 
 var allLinks = document.getElementsByTagName("a");
 
-for (i = 0; i < allLinks.length; i++)
-{
-   var href = allLinks[i].href;
+for (i = 0; i < allLinks.length; i++) {
+	var href = allLinks[i].href;
 	var journalSites = /(.*\b(ieeexplore\.ieee\.org|jstor\.org|interscience\.wiley\.com|sagepub\.com|elsevier\.com|journals.cambridge.org|metapress\.com))(\/|%2F)(.*)/i;
-   if (href.match(journalSites))
-   {
+	if (href.match(journalSites)) {
 		GM_log("found jstor link: " + href);
-	  var matches = href.match(journalSites);
-	  allLinks[i].setAttribute("href", matches[1] + "." + proxy + matches[3] + matches[4]);
-   }
+		var matches = href.match(journalSites);
+		allLinks[i].setAttribute("href", matches[1] + "." + proxy + matches[3] + matches[4]);
+	}
 }
 })();
 
