@@ -22,6 +22,19 @@ Christian G. Warden - cwarden@xerus.org
 var defaultProxy = "libaccess.sjlibrary.org";
 var proxy = '';
 
+// Use localStorage in Chrome, which doesn't support GM_{set,get}Value.
+// Unfortunately, localStorage is tied to the domain so you get prompted for
+// the proxy on every new domain.
+// This code is from Elad Ossadon: http://bit.ly/eOs7H6
+if (!this.GM_getValue || this.GM_getValue.toString().indexOf("not supported")>-1) {
+	this.GM_getValue=function (key,def) {
+		return localStorage[key] || def;
+	};
+	this.GM_setValue=function (key,value) {
+		return localStorage[key]=value;
+	};
+}
+
 if (!GM_getValue('proxy')) {
 	proxy = prompt("What proxy would you like to use for JSTOR?", defaultProxy);
 	GM_setValue('proxy', proxy);
