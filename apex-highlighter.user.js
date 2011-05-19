@@ -19,19 +19,31 @@ function addJQuery(callback) {
 
 // All your GM code must be inside this function
 function main() {
+	var syntax, codeLocation, brush;
 	$.noConflict();
-	if (jQuery('pre.codeBlock').length == 0) {
-		// no code block on this page
-		return;
+	switch (jQuery('h1.pageType').text()) {
+		// TODO: create Apex and VisualForce brushes
+		// Use Java and XML brushes for now
+		case 'Visualforce Page':
+			brush = 'Xml';
+			codeLocation = 'pre.codeBlock';
+			break;
+		case 'Apex Class':
+		case 'Apex Trigger':
+			brush = 'Java';
+			codeLocation = 'pre.codeBlock table tbody tr td + td';
+			break;
+		default:
+			// no code block on this page
+			return;
 	}
+	syntax = brush.toLowerCase();
 
-	jQuery('pre.codeBlock').addClass('origCodeBlock').before('<script type="syntaxhighlighter" class="brush: java codeBlock"><![CDATA[' + jQuery('pre.codeBlock table tbody tr td + td').html().replace(/<br>/g, '\n') + ']]></script>');
+	jQuery('pre.codeBlock').addClass('origCodeBlock').before('<script type="syntaxhighlighter" class="brush: ' + syntax + '"><![CDATA[' + jQuery(codeLocation).html().replace(/<br>/g, '\n') + ']]></script>');
 
 	jQuery('head').append('<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />');
 	jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js', function() {
-		// TODO: create an Apex brush
-		// Use Java brush for now
-		jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJava.js', function() {
+		jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shBrush' + brush + '.js', function() {
 			SyntaxHighlighter.highlight();
 			jQuery('pre.origCodeBlock').remove();
 			jQuery('td.code code').addClass('codeBlock');
