@@ -20,12 +20,18 @@ function addJQuery(callback) {
 // All your GM code must be inside this function
 function main() {
 	$.noConflict();
-	jQuery('pre.codeBlock').replaceWith('<script type="syntaxhighlighter" class="brush: java codeBlock"><![CDATA[' + jQuery('pre.codeBlock table tbody tr td + td').html().replace(/<br>/g, '\n') + ']]></script>');
+	if (jQuery('pre.codeBlock').length == 0) {
+		// no code block on this page
+		return;
+	}
+
+	jQuery('pre.codeBlock').addClass('origCodeBlock').before('<script type="syntaxhighlighter" class="brush: java codeBlock"><![CDATA[' + jQuery('pre.codeBlock table tbody tr td + td').html().replace(/<br>/g, '\n') + ']]></script>');
 
 	jQuery('head').append('<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />');
 	jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js', function() {
 		jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJava.js', function() {
 			SyntaxHighlighter.highlight();
+			jQuery('pre.origCodeBlock').remove();
 			jQuery('td.code code').addClass('codeBlock');
 		});
 	});
