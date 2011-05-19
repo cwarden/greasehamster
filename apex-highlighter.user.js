@@ -20,16 +20,7 @@ function addJQuery(callback) {
 // All your GM code must be inside this function
 function main() {
 	$.noConflict();
-	// jQuery('pre.codeBlock').replaceWith('<script type="syntaxhighlighter" class="brush: java"><![CDATA[' + jQuery('pre.codeBlock table tbody tr td + td').text() + ']]></script>');
-	// jQuery('pre.codeBlock').replaceWith('<pre class="brush: java">' + jQuery('pre.codeBlock table tbody tr td + td').html().replace(/<br>/g, '\n').replace(/</g, '&lt;') + '</pre>')
-
 	jQuery('pre.codeBlock').replaceWith('<script type="syntaxhighlighter" class="brush: java codeBlock"><![CDATA[' + jQuery('pre.codeBlock table tbody tr td + td').html().replace(/<br>/g, '\n') + ']]></script>');
-
-	/*
-	jQuery('head').append('<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />' +
-	'<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>' +
-	'<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJava.js" type="text/javascript"></script>');
-	*/
 
 	jQuery('head').append('<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />');
 	jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js', function() {
@@ -40,6 +31,8 @@ function main() {
 	});
 
 }
+
+// TODO: abort if this page doesn't require syntax highlighting
 
 // load jQuery and execute the main function
 addJQuery(main);
