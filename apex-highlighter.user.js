@@ -29,6 +29,8 @@ function main() {
 
 	jQuery('head').append('<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />');
 	jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js', function() {
+		// TODO: create an Apex brush
+		// Use Java brush for now
 		jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJava.js', function() {
 			SyntaxHighlighter.highlight();
 			jQuery('pre.origCodeBlock').remove();
