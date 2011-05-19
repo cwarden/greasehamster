@@ -44,6 +44,8 @@ function main() {
 	jQuery('head').append('<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />');
 	jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js', function() {
 		jQuery.getScript('http://alexgorbatchev.com/pub/sh/current/scripts/shBrush' + brush + '.js', function() {
+			SyntaxHighlighter.defaults['tab-size'] = 3;
+			SyntaxHighlighter.defaults['gutter'] = false;
 			SyntaxHighlighter.highlight();
 			jQuery('pre.origCodeBlock').remove();
 			jQuery('td.code code').addClass('codeBlock');
