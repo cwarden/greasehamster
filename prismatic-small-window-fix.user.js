@@ -32,6 +32,6 @@ var injectMe = function() {
 	}, 200);
 };
 
-scriptNode = document.createElement('script');
-scriptNode.textContent = 'var injectMe = ' + injectMe.toString() + '; injectMe();'
+var scriptNode = document.createElement('script');
+scriptNode.textContent = '(' + injectMe.toString() + ')();'
 document.head.appendChild(scriptNode);
