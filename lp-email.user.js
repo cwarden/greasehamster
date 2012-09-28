@@ -2,7 +2,8 @@
 // @name          quick-lp-email
 // @namespace     http://greatvines.com
 // @description   Show LiquidPlanner Task email address in header
-// @match       https://app.liquidplanner.com/*
+// @match         https://app.liquidplanner.com/*
+// @version       1.1
 //
 // ==/UserScript==
 
@@ -24,9 +25,12 @@ function main() {
 
 	var updateEmail = function() {
 		try {
-			var address = LP.Treeitem.grid.getSelectedRowId() + "-" + LP.JSON.emailInbox;
+			var id = LP.Treeitem.grid.getSelectedRowId();
+			var address = id + "-" + LP.JSON.emailInbox;
+			var num = id.replace(/\D/g, '');
+
 			$gm('div#filter_cues span.email').remove();
-			$gm('div#filter_cues').append('<span class="email"><a href="mailto:' + address + '">' + address + '</a></span>');
+			$gm('div#filter_cues').append('<span class="email"><a href="mailto:' + address + '">' + address + '</a> (' + num + ')</span>');
 		} catch (e) {
 			console.log(e);
 		}
