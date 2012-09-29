@@ -3,7 +3,7 @@
 // @namespace     http://greatvines.com
 // @description   Show LiquidPlanner Task email address in header
 // @match         https://app.liquidplanner.com/*
-// @version       1.1
+// @version       1.2
 //
 // ==/UserScript==
 
@@ -25,12 +25,21 @@ function main() {
 
 	var updateEmail = function() {
 		try {
-			var id = LP.Treeitem.grid.getSelectedRowId();
-			var address = id + "-" + LP.JSON.emailInbox;
-			var num = id.replace(/\D/g, '');
+			var id, address, num;
+			if (LP.Treeitem.grid) {
+				id = LP.Treeitem.grid.getSelectedRowId();
+				address = id + "-" + LP.JSON.emailInbox;
+				num = id.replace(/\D/g, '');
 
-			$gm('div#filter_cues span.email').remove();
-			$gm('div#filter_cues').append('<span class="email"><a href="mailto:' + address + '">' + address + '</a> (' + num + ')</span>');
+				$gm('div#filter_cues span.email').remove();
+				$gm('div#filter_cues').append('<span class="email"><a href="mailto:' + address + '">' + address + '</a> (' + num + ')</span>');
+			} else if (LP.UpcomingTasks) {
+				id = $gm(LP.UpcomingTasks.selectedRow()).attr('rowid');
+				address = id + "-" + LP.JSON.emailInbox;
+				num = id.replace(/\D/g, '');
+				$gm('div#upcoming_tasks_ribbon span.email').remove();
+				$gm('div#upcoming_tasks_ribbon').append('<span class="email"><a href="mailto:' + address + '">' + address + '</a> (' + num + ')</span>');
+			}
 		} catch (e) {
 			console.log(e);
 		}
