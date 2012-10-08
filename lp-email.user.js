@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name          quick-lp-email
 // @namespace     http://greatvines.com
-// @description   Show LiquidPlanner Task email address in header
+// @description   Show LiquidPlanner Task email address and id in header
 // @match         https://app.liquidplanner.com/*
-// @version       1.2
+// @version       1.3
 //
 // ==/UserScript==
 
@@ -46,6 +46,7 @@ function main() {
 	};
 	updateEmail();
 	$gm(document).on('click', 'td.ti_name', function() { setTimeout(updateEmail, 100); });
+	$gm(document).on('click', 'div#upcoming_tasks_list tr', function() { setTimeout(updateEmail, 100); });
 	$gm(document).on('keyup', function() { setTimeout(updateEmail, 100); });
 }
 
