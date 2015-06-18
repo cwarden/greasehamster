@@ -1,9 +1,10 @@
 // ==UserScript==
-// @name          sfdc-org-name
-// @namespace     http://greatvines.com
-// @description   Show Salesforce.com Org name at the top of Salesforce pages
-// @match       https://*.salesforce.com/*
-// @match       https://*.cloudforce.com/*
+// @name         sfdc-org-name
+// @namespace    http://greatvines.com
+// @description  Show Salesforce.com Org name at the top of Salesforce pages
+// @match        https://*.salesforce.com/*
+// @match        https://*.cloudforce.com/*
+// @version      1.1
 //
 // Doesn't work on VisualForce pages yet because the session id in the cookie
 // on the VisualForce domain isn't valid for the API call.  Probably need to
@@ -25,17 +26,17 @@ function addJQuery(callback) {
 
 // All your GM code must be inside this function
 function main() {
-	$.noConflict();
+	var jq = $.noConflict(true);
 	var match = document.cookie.match(/\bsid=([^;]+)/);
 	if (match) {
 		__sfdcSessionId = match[1];
 	} else {
 		return;
 	}
-	jQuery.getScript('/soap/ajax/25.0/connection.js', function() {
+	jq.getScript('/soap/ajax/25.0/connection.js', function() {
 		sforce.connection.query("SELECT Name FROM Organization LIMIT 1", {
 			onSuccess: function(result) {
-				jQuery('table#phHeader td.right div.messages').append(result.records.Name);
+				jq('table#phHeader td.right div.messages').append(result.records.Name);
 			},
 			onFailure: function(error) {
 				console.log(error.faultstring);
